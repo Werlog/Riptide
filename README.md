@@ -30,6 +30,7 @@ However, if you need to use Riptide with/in a language other than C# on one end,
 
 - Python: [Pytide](https://github.com/ebosseck/PytideNetworking/tree/main)
 - Dart/Flutter: [Riptide Dart Port](https://github.com/JayKay135/Riptide-Dart-Port)
+- C# Godot Steam Transport: [GodotRiptideSteamTransport](https://github.com/bar-ji/GodotRiptideSteamTransport)
 
 ## Contributions
 
