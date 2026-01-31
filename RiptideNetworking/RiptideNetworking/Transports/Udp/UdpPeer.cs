@@ -40,7 +40,7 @@ namespace Riptide.Transports.Udp
         /// <summary>The array that incoming data is received into.</summary>
         private readonly byte[] receivedData;
         /// <summary>The socket to use for sending and receiving.</summary>
-        private Socket socket;
+        public Socket Socket { get; private set; }
         /// <summary>Whether or not the transport is running.</summary>
         private bool isRunning;
         /// <summary>A reusable endpoint.</summary>
@@ -74,16 +74,16 @@ namespace Riptide.Transports.Udp
                 CloseSocket();
 
             if (mode == SocketMode.IPv4Only)
-                socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                Socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             else if (mode == SocketMode.IPv6Only)
-                socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp) { DualMode = false };
+                Socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp) { DualMode = false };
             else
-                socket = new Socket(SocketType.Dgram, ProtocolType.Udp);
+                Socket = new Socket(SocketType.Dgram, ProtocolType.Udp);
 
-            IPAddress any = socket.AddressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any;
-            socket.SendBufferSize = socketBufferSize;
-            socket.ReceiveBufferSize = socketBufferSize;
-            socket.Bind(new IPEndPoint(listenAddress == null ? any : listenAddress, port));
+            IPAddress any = Socket.AddressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any;
+            Socket.SendBufferSize = socketBufferSize;
+            Socket.ReceiveBufferSize = socketBufferSize;
+            Socket.Bind(new IPEndPoint(listenAddress == null ? any : listenAddress, port));
             remoteEndPoint = new IPEndPoint(any, 0);
 
             isRunning = true;
@@ -96,7 +96,7 @@ namespace Riptide.Transports.Udp
                 return;
 
             isRunning = false;
-            socket.Close();
+            Socket.Close();
         }
 
         /// <summary>Polls the socket and checks if any data was received.</summary>
@@ -111,8 +111,8 @@ namespace Riptide.Transports.Udp
                 int byteCount = 0;
                 try
                 {
-                    if (socket.Available > 0 && socket.Poll(ReceivePollingTime, SelectMode.SelectRead))
-                        byteCount = socket.ReceiveFrom(receivedData, SocketFlags.None, ref remoteEndPoint);
+                    if (Socket.Available > 0 && Socket.Poll(ReceivePollingTime, SelectMode.SelectRead))
+                        byteCount = Socket.ReceiveFrom(receivedData, SocketFlags.None, ref remoteEndPoint);
                     else
                         tryReceiveMore = false;
                 }
@@ -160,7 +160,7 @@ namespace Riptide.Transports.Udp
             try
             {
                 if (isRunning)
-                    socket.SendTo(dataBuffer, numBytes, SocketFlags.None, toEndPoint);
+                    Socket.SendTo(dataBuffer, numBytes, SocketFlags.None, toEndPoint);
             }
             catch (SocketException)
             {

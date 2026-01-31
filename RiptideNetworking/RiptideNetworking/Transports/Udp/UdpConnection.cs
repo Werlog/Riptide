@@ -7,6 +7,7 @@ using Riptide.Utils;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Sockets;
 
 namespace Riptide.Transports.Udp
 {
@@ -55,6 +56,11 @@ namespace Riptide.Transports.Udp
         public override int GetHashCode()
         {
             return -288961498 + EqualityComparer<IPEndPoint>.Default.GetHashCode(RemoteEndPoint);
+        }
+
+        public override Socket GetSocket()
+        {
+            return peer.Socket;
         }
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member

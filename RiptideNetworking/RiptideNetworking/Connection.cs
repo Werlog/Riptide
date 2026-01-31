@@ -7,6 +7,7 @@ using Riptide.Transports;
 using Riptide.Utils;
 using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
 
 namespace Riptide
 {
@@ -138,6 +139,11 @@ namespace Riptide
             NotifyLossResilience = 64;
             pendingMessages = new Dictionary<ushort, PendingMessage>();
         }
+
+        /// <summary>
+        /// Get the Socket of the Connection
+        /// </summary>
+        public abstract Socket GetSocket();
 
         /// <summary>Initializes connection data.</summary>
         /// <param name="peer">The <see cref="Riptide.Peer"/> which this connection belongs to.</param>
