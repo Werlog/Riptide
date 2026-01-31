@@ -20,6 +20,8 @@ namespace Riptide.Transports.Udp
         /// <inheritdoc/>
         public event EventHandler<DataReceivedEventArgs> DataReceived;
 
+        public Socket UdpSocket => udpConnection.GetSocket();
+
         /// <summary>The connection to the server.</summary>
         private UdpConnection udpConnection;
 
