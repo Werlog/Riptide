@@ -60,14 +60,14 @@ namespace Riptide.Transports.Tcp
                 StopListening();
 
             IPEndPoint localEndPoint = new IPEndPoint(listenAddress, port);
-            socket = new Socket(SocketType.Stream, ProtocolType.Tcp)
+            Socket = new Socket(SocketType.Stream, ProtocolType.Tcp)
             {
                 SendBufferSize = socketBufferSize,
                 ReceiveBufferSize = socketBufferSize,
                 NoDelay = true,
             };
-            socket.Bind(localEndPoint);
-            socket.Listen(MaxPendingConnections);
+            Socket.Bind(localEndPoint);
+            Socket.Listen(MaxPendingConnections);
 
             isRunning = true;
         }
@@ -91,9 +91,9 @@ namespace Riptide.Transports.Tcp
         /// <summary>Accepts any pending connections.</summary>
         private void Accept()
         {
-            if (socket.Poll(0, SelectMode.SelectRead))
+            if (Socket.Poll(0, SelectMode.SelectRead))
             {
-                Socket acceptedSocket = socket.Accept();
+                Socket acceptedSocket = Socket.Accept();
                 IPEndPoint fromEndPoint = (IPEndPoint)acceptedSocket.RemoteEndPoint;
                 if (!connections.ContainsKey(fromEndPoint))
                 {
@@ -113,7 +113,7 @@ namespace Riptide.Transports.Tcp
                 return;
 
             isRunning = false;
-            socket.Close();
+            Socket.Close();
         }
 
         /// <inheritdoc/>

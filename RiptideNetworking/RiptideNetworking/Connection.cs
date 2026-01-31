@@ -140,11 +140,6 @@ namespace Riptide
             pendingMessages = new Dictionary<ushort, PendingMessage>();
         }
 
-        /// <summary>
-        /// Get the Socket of the Connection
-        /// </summary>
-        public abstract Socket GetSocket();
-
         /// <summary>Initializes connection data.</summary>
         /// <param name="peer">The <see cref="Riptide.Peer"/> which this connection belongs to.</param>
         /// <param name="timeoutTime">The timeout time.</param>

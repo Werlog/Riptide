@@ -35,7 +35,7 @@ namespace Riptide.Transports.Tcp
             }
 
             IPEndPoint remoteEndPoint = new IPEndPoint(ip, port);
-            socket = new Socket(SocketType.Stream, ProtocolType.Tcp)
+            Socket = new Socket(SocketType.Stream, ProtocolType.Tcp)
             {
                 SendBufferSize = socketBufferSize,
                 ReceiveBufferSize = socketBufferSize,
@@ -44,7 +44,7 @@ namespace Riptide.Transports.Tcp
             
             try
             {
-                socket.Connect(remoteEndPoint); // TODO: do something about the fact that this is a blocking call
+                Socket.Connect(remoteEndPoint); // TODO: do something about the fact that this is a blocking call
             }
             catch (SocketException)
             {
@@ -53,7 +53,7 @@ namespace Riptide.Transports.Tcp
                 // call OnConnected(), and let Riptide detect that no connection was established.
             }
 
-            connection = tcpConnection = new TcpConnection(socket, remoteEndPoint, this);
+            connection = tcpConnection = new TcpConnection(Socket, remoteEndPoint, this);
             OnConnected();
             return true;
         }
@@ -95,7 +95,7 @@ namespace Riptide.Transports.Tcp
         /// <inheritdoc/>
         public void Disconnect()
         {
-            socket.Close();
+            Socket.Close();
             tcpConnection = null;
         }
 

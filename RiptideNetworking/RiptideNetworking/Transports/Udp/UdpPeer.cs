@@ -40,7 +40,7 @@ namespace Riptide.Transports.Udp
         /// <summary>The array that incoming data is received into.</summary>
         private readonly byte[] receivedData;
         /// <summary>The socket to use for sending and receiving.</summary>
-        public Socket Socket { get; private set; }
+        public Socket Socket { get; protected set; }
         /// <summary>Whether or not the transport is running.</summary>
         private bool isRunning;
         /// <summary>A reusable endpoint.</summary>

@@ -172,11 +172,6 @@ namespace Riptide.Transports.Tcp
             return -288961498 + EqualityComparer<IPEndPoint>.Default.GetHashCode(RemoteEndPoint);
         }
 
-        public override Socket GetSocket()
-        {
-            return socket;
-        }
-
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static bool operator ==(TcpConnection left, TcpConnection right)
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

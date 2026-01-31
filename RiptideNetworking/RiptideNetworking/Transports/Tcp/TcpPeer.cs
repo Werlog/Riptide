@@ -24,7 +24,7 @@ namespace Riptide.Transports.Tcp
         /// <summary>The size to use for the socket's send and receive buffers.</summary>
         protected readonly int socketBufferSize;
         /// <summary>The main socket, either used for listening for connections or for sending and receiving data.</summary>
-        protected Socket socket;
+        public Socket Socket { get; protected set; }
         /// <summary>The minimum size that may be used for the socket's send and receive buffers.</summary>
         private const int MinSocketBufferSize = 256 * 1024; // 256KB
 
